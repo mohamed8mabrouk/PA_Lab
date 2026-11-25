@@ -1,0 +1,10 @@
+# Security rule 1 - LAN to Internet
+set rulebase security rules "Internet" from LAN to WAN source any destination any application any service any action allow
+
+# Security rule 2 - Publish the web server
+# NOTE: destination address = PRE-NAT IP (192.168.1.25), destination zone = POST-NAT zone (LAN)
+set rulebase security rules "Publish Server" from WAN to LAN source any destination 192.168.1.25 application any service service-http action allow
+
+# Default rules (built-in)
+#   intrazone-default : allow
+#   interzone-default : deny

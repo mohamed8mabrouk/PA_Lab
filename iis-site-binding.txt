@@ -1,0 +1,10 @@
+Server       : Windows Server 2019 (PDC19)
+IIS Site     : Portfolio
+Binding type : http
+IP address   : 192.168.2.14
+Port         : 8080
+Host name    : (none)
+
+# PowerShell equivalent
+Import-Module WebAdministration
+New-WebBinding -Name "Portfolio" -Protocol http -IPAddress 192.168.2.14 -Port 8080

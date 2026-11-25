@@ -1,0 +1,16 @@
+# Address objects
+set address 192.168.2.10 ip-netmask 192.168.2.10/32
+set address 192.168.2.14 ip-netmask 192.168.2.14/32
+set address 192.168.1.25 ip-netmask 192.168.1.25/32
+
+# NAT rule 1 - Source NAT (LAN -> WAN), dynamic IP and port on ethernet1/1
+set rulebase nat rules "NAT" from LAN to WAN
+set rulebase nat rules "NAT" source [ 192.168.2.10 192.168.2.14 ] destination any service any
+set rulebase nat rules "NAT" to-interface ethernet1/1
+set rulebase nat rules "NAT" source-translation dynamic-ip-and-port interface-address interface ethernet1/1 ip 192.168.1.20/24
+
+# NAT rule 2 - Destination NAT with port translation (WAN -> published web server)
+set rulebase nat rules "WAN TO LAN" from WAN to WAN
+set rulebase nat rules "WAN TO LAN" source any destination 192.168.1.25 service service-http
+set rulebase nat rules "WAN TO LAN" to-interface ethernet1/1
+set rulebase nat rules "WAN TO LAN" destination-translation translated-address 192.168.2.14 translated-port 8080
